@@ -11,7 +11,10 @@
     "react:start": "vite",
     "react:build": "vite build",
     "electron:start": "wait-on tcp:5173 && cross-env ELECTRON_START_URL=http://localhost:5173 electron .",
-    "dist": "npm run react:build && electron-builder --linux"
+    
+    "dist:win": "npm run react:build && electron-builder --win",
+    "dist:linux": "npm run react:build && electron-builder --linux",
+    "dist:all": "npm run react:build && electron-builder --win --linux"
   },
   "build": {
     "appId": "com.yourname.hybridapp",
@@ -30,43 +33,36 @@
     "extraResources": [
       {
         "from": "py_dist/backend",
-        "to": "backend"
+        "to": "backend",
+        "filter": ["!**/*.exe"] 
+      },
+      {
+        "from": "py_dist/backend.exe",
+        "to": "backend.exe"
       }
     ],
-    "linux": {
-      "target": "AppImage",
-      "category": "Development",
-      "icon": "build/icon.png"
-    },
     "win": {
       "target": "nsis",
       "icon": "build/icon.ico"
     },
-    "mac": {
-      "target": "dmg",
-      "icon": "build/icon.icns",
-      "category": "public.app-category.developer-tools"
+    "linux": {
+      "target": "AppImage",
+      "category": "Development",
+      "icon": "build/icon.png"
     }
   },
   "dependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "zeromq": "^6.0.0-beta.6"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.1",
-    "@types/react": "^19.2.5",
-    "@types/react-dom": "^19.2.3",
-    "@vitejs/plugin-react": "^5.1.1",
-    "concurrently": "^9.2.1",
-    "cross-env": "^10.1.0",
-    "electron": "^39.2.7",
-    "electron-builder": "^26.7.0",
-    "eslint": "^9.39.1",
-    "eslint-plugin-react-hooks": "^7.0.1",
-    "eslint-plugin-react-refresh": "^0.4.24",
-    "globals": "^16.5.0",
-    "vite": "^7.2.4",
-    "wait-on": "^9.0.3"
+    "@vitejs/plugin-react": "^4.0.0",
+    "concurrently": "^8.0.1",
+    "cross-env": "^7.0.3",
+    "electron": "^25.0.0",
+    "electron-builder": "^24.0.0",
+    "vite": "^4.3.0",
+    "wait-on": "^7.0.1"
   }
 }
